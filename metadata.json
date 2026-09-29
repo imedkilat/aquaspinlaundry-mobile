@@ -1,0 +1,6 @@
+{
+  "name": "Aquaspin Laundry Station",
+  "description": "Branch POS, load intake, machine bay manager, suki rewards, and customer live order tracker for Aquaspin Laundry Station.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
