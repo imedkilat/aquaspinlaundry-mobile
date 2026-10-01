@@ -1,6 +1,7 @@
 import React from 'react';
 import { LaundryOrder } from '../types';
 import { STORE_INFO } from '../data/mockData';
+import { PaymentStatusBadge } from './StatusBadge';
 
 interface ReceiptModalProps {
   order: LaundryOrder | null;
@@ -90,11 +91,9 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({
               <span>TOTAL DUE:</span>
               <span className="text-[#006194]">₱{order.totalAmount.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-[11px]">
-              <span>Payment Status:</span>
-              <span className={`font-bold ${order.paymentStatus === 'pay_later' ? 'text-amber-700' : 'text-emerald-700'}`}>
-                {order.paymentStatus === 'gcash_paid' ? 'GCASH PAID' : order.paymentStatus === 'cash_paid' ? 'CASH PAID' : 'UNPAID (PAY ON PICKUP)'}
-              </span>
+            <div className="flex justify-between items-center text-[11px] pt-0.5">
+              <span className="font-semibold">Payment Status:</span>
+              <PaymentStatusBadge status={order.paymentStatus} size="sm" />
             </div>
           </div>
 

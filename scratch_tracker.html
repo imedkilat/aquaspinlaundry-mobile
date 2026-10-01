@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-surface": "#131b2e", "surface-container": "#eaedff", "secondary": "#006399", "on-background": "#131b2e", "surface-tint": "#006398", "surface-variant": "#dae2fd", "on-secondary-fixed-variant": "#004b74", "tertiary": "#00685f", "tertiary-container": "#008378", "surface-dim": "#d2d9f4", "surface-bright": "#faf8ff", "primary": "#006194", "inverse-primary": "#93ccff", "on-secondary-fixed": "#001d32", "tertiary-fixed": "#89f5e7", "inverse-surface": "#283044", "primary-fixed": "#cce5ff", "on-tertiary": "#ffffff", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#005049", "inverse-on-surface": "#eef0ff", "on-primary": "#ffffff", "secondary-fixed-dim": "#94ccff", "surface": "#faf8ff", "outline": "#707881", "outline-variant": "#bfc7d2", "primary-fixed-dim": "#93ccff", "on-primary-fixed-variant": "#004b73", "surface-container-highest": "#dae2fd", "on-tertiary-fixed": "#00201d", "surface-container-low": "#f2f3ff", "on-secondary": "#ffffff", "error": "#ba1a1a", "on-primary-container": "#fdfcff", "on-primary-fixed": "#001d31", "on-error": "#ffffff", "on-secondary-container": "#004f7b", "surface-container-high": "#e2e7ff", "on-surface-variant": "#3f4850", "secondary-fixed": "#cde5ff", "on-error-container": "#93000a", "background": "#faf8ff", "tertiary-fixed-dim": "#6bd8cb", "on-tertiary-container": "#f4fffc", "primary-container": "#007bb9", "error-container": "#ffdad6", "secondary-container": "#7bc2ff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "gutter-tablet": "1.25rem", "margin-tablet": "2rem", "margin": "1rem", "gutter-desktop": "1.5rem", "space-md": "1rem", "space-xl": "2rem", "margin-desktop": "3rem", "gutter": "1rem" }, fontFamily: { "display": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "currency-display": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "currency-body": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"] }, fontSize: { "display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "currency-display": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "700" }], "headline-lg-mobile": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display-mobile": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "currency-body": ["15px", { "lineHeight": "20px", "fontWeight": "600" }], "headline-sm": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-lg": ["30px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Aquaspin Laundry Station Logo" class="h-7 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkgebFlU2r1GH_pQ4eCLvwlJjUumCbiT6cupZBWqli1DWoslmh8t8Qve7lEKsB9fRThXACL-pO0SosANyHSgbtWsT_AqcfY9Jey_roRVC11b-ohp5G_00ALUdfT0JAuI25AA0nhom0aLAQL6xcIuhvZJDP8QhzBZc5q3A89nQgz20yG1OMJXDslZUv77Bdn95b9h1Kg5nxvn0BU0d1ZD-YBg0Ac2Qf9-B0m8IqRjjLkyxelS5JYwHPTg"/><div class="flex flex-col min-w-0"><span class="font-label-lg text-label-lg text-on-surface truncate">Customer Order Tracker</span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Live Load Tracking</span></div></div><div class="flex items-center gap-space-xs"><a aria-label="Call Branch" class="flex items-center gap-1.5 px-space-sm h-9 rounded-full bg-secondary-container/40 text-on-secondary-container hover:bg-secondary-container/60 transition-colors" href="tel:+639171234567"><span class="material-symbols-outlined text-[18px]">call</span><span class="font-label-sm text-label-sm hidden sm:inline">Contact Shop</span></a><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlIuEIo-lJ6CHUgNEMSAM8zbz_OVf0C8AZw7ssm0pbSkIKIPISUPYqy0w72NgXeo77F5wj3p4SCzAiwlYIuMTQDlZ-Oh4ZCXAzoLkfqoZ1g7QmKrff9NMdWKTJUmLIZQKdYDGXkFJ8uP8AM7FKQcUA5XNuXSn_OqnIuoG2EgY93yY-OqHI08fcEozBZ3X5Wdjf-oaWer_zaB50WzBU6ZfskOYo_bpvJf6adrZojR7n-M1OoL2v1bg1hA"/></div></div></header><main class="flex-1 flex flex-col relative w-full pt-14 pb-20 bg-surface"><div class="flex flex-col w-full">
+<!-- Subtle Aqueous Backdrop Decor -->
+<div class="relative w-full overflow-hidden px-margin py-space-md flex flex-col gap-space-lg">
+<!-- Hero Customer & Claim Identification -->
+<section class="flex flex-col gap-space-md">
+<!-- Welcome Anonymous Context Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30 flex items-center justify-center text-secondary shadow-sm flex-shrink-0">
+<span class="material-symbols-outlined text-[22px]">local_laundry_service</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-tertiary-container tracking-wider uppercase font-bold">Live Receipt Order Tracker</span>
+<span class="font-headline-sm text-headline-sm text-on-surface truncate">Katipunan Ave. Branch (QC)</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-high text-on-surface-variant shadow-sm flex-shrink-0">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-ping"></span>
+<span class="font-label-sm text-label-sm">Live Status</span>
+</div>
+</div>
+<!-- Claim Code Hero Card -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-lowest p-space-md shadow-md">
+<!-- Background subtle water swirl accent -->
+<div class="absolute -right-8 -top-8 w-36 h-36 rounded-full bg-primary/5 pointer-events-none"></div>
+<div class="flex flex-col gap-space-sm relative z-10">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-md text-label-md uppercase tracking-wider text-outline">Counter Claim Ticket</span>
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded-full text-on-surface">Shelf Bin: B-04</span>
+</div>
+<div class="flex items-center justify-between gap-space-sm bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Claim Code</span>
+<div class="flex items-center gap-2">
+<span class="font-display-mobile text-display-mobile tracking-wider text-primary font-bold" id="claimCodeText">#AQ-1081</span>
+<button aria-label="Copy Claim Code" class="h-8 w-8 rounded-full bg-surface-container-lowest text-primary shadow-sm hover:bg-surface-container flex items-center justify-center transition-transform active:scale-95" id="copyCodeBtn" onclick="copyClaimCode()" title="Copy Claim Code">
+<span class="material-symbols-outlined text-[18px]" id="copyIcon">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Barcode & QR Stamp for in-store staff scan -->
+<div class="flex flex-col items-center bg-surface-container-lowest p-1.5 rounded shadow-sm border border-outline-variant/20 flex-shrink-0">
+<svg class="w-16 h-10 text-on-surface" fill="currentColor" viewbox="0 0 100 48">
+<!-- Decorative Barcode Stripes -->
+<rect height="38" width="3" x="2" y="4"></rect>
+<rect height="38" width="2" x="7" y="4"></rect>
+<rect height="38" width="6" x="12" y="4"></rect>
+<rect height="38" width="2" x="20" y="4"></rect>
+<rect height="38" width="4" x="25" y="4"></rect>
+<rect height="38" width="3" x="32" y="4"></rect>
+<rect height="38" width="2" x="37" y="4"></rect>
+<rect height="38" width="7" x="42" y="4"></rect>
+<rect height="38" width="2" x="52" y="4"></rect>
+<rect height="38" width="4" x="56" y="4"></rect>
+<rect height="38" width="5" x="62" y="4"></rect>
+<rect height="38" width="2" x="70" y="4"></rect>
+<rect height="38" width="6" x="74" y="4"></rect>
+<rect height="38" width="2" x="82" y="4"></rect>
+<rect height="38" width="5" x="86" y="4"></rect>
+<rect height="38" width="4" x="93" y="4"></rect>
+</svg>
+<span class="font-label-sm text-label-sm text-outline tracking-widest mt-0.5">AQ1081</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant pt-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tertiary">person</span>
+<span class="font-label-md text-label-md text-on-surface">Bea S.</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">scale</span>
+<span class="font-label-md text-label-md text-on-surface">12.0 kg Comforter Load</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Celebratory & Urgent 'Ready for Pickup' Banner -->
+<section class="relative overflow-hidden rounded-xl bg-gradient-to-br from-tertiary-container to-tertiary p-space-md text-on-tertiary shadow-lg">
+<!-- Water Droplet Aesthetic Sparkle Shapes -->
+<div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-white/10 blur-xl pointer-events-none"></div>
+<div class="absolute left-1/2 -top-10 w-24 h-24 rounded-full bg-white/10 blur-lg pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center flex-shrink-0 text-white shadow-inner">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-white font-bold leading-tight">Fresh Laundry is Ready for Pickup! 🎉</span>
+<span class="font-body-sm text-body-sm text-white/90 mt-0.5">Clean, neatly folded &amp; sealed in Eco-Bags on Shelf B-04.</span>
+</div>
+</div>
+<div class="rounded-lg bg-black/15 backdrop-blur-sm p-space-sm flex flex-col gap-1 mt-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 text-white/95">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed">schedule</span>
+<span class="font-label-sm text-label-sm font-semibold">Finished today at 3:15 PM</span>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-bold">Stored Safely</span>
+</div>
+<div class="flex items-center gap-1.5 text-amber-200 mt-1">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+<span class="font-label-sm text-label-sm text-white">Store closes at <strong class="underline font-bold text-white">8:00 PM today</strong>. Please present Claim Code #AQ-1081.</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Detailed Visual Step Tracker -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-1">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Cycle &amp; Processing Timeline</h2>
+<span class="font-label-sm text-label-sm text-primary font-bold">Step 4 of 5</span>
+</div>
+<div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-md">
+<!-- Step 1: Received & Weighed (Completed) -->
+<div class="flex items-start gap-space-md relative">
+<!-- Step Connector Line -->
+<div class="absolute left-4 top-8 bottom-0 w-0.5 bg-primary/30"></div>
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm flex-shrink-0 z-10">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex-1 min-w-0 pb-3">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">1. Received &amp; Weighed</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">10:15 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">12.0 kg recorded • Heavy Comforter &amp; Bed Delicates segregation</p>
+</div>
+</div>
+<!-- Step 2: Washing & Stain Treatment (Completed) -->
+<div class="flex items-start gap-space-md relative">
+<!-- Step Connector Line -->
+<div class="absolute left-4 top-8 bottom-0 w-0.5 bg-primary/30"></div>
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm flex-shrink-0 z-10">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex-1 min-w-0 pb-3">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">2. Washing &amp; Stain Treatment</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">10:45 AM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Eco Deep Wash cycle + Ariel Sunrise &amp; Downy Mystique added</p>
+</div>
+</div>
+<!-- Step 3: Tumble Drying & Fluff (Completed) -->
+<div class="flex items-start gap-space-md relative">
+<!-- Step Connector Line -->
+<div class="absolute left-4 top-8 bottom-0 w-0.5 bg-tertiary"></div>
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm flex-shrink-0 z-10">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex-1 min-w-0 pb-3">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">3. Tumble Drying &amp; Sanitize</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">12:30 PM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">High-heat anti-allergen fluff cycle completed in Dryer Bay #06</p>
+</div>
+</div>
+<!-- Step 4: Ready for Pickup (ACTIVE CURRENT STATE) -->
+<div class="flex items-start gap-space-md relative">
+<!-- Step Connector Line to Next Step (Muted) -->
+<div class="absolute left-4 top-8 bottom-0 w-0.5 bg-surface-container-highest"></div>
+<div class="relative w-8 h-8 rounded-full bg-tertiary-container text-on-tertiary flex items-center justify-center shadow-md flex-shrink-0 z-10">
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span class="absolute inset-0 rounded-full bg-tertiary-container animate-ping opacity-30"></span>
+</div>
+<div class="flex-1 min-w-0 bg-surface-container-low p-space-sm rounded-lg shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-tertiary font-bold flex items-center gap-1">
+                4. Ready for Pickup
+                <span class="px-1.5 py-0.2 rounded bg-tertiary text-on-tertiary font-label-sm text-label-sm">NOW</span>
+</span>
+<span class="font-label-md text-label-md text-tertiary font-bold">1:45 PM</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-1">Folded, steam-pressed &amp; sealed in breathable Eco-Bag in <strong>Bin #B-04</strong></p>
+<div class="flex items-center gap-2 mt-2 pt-2 border-t border-outline-variant/10">
+<span class="material-symbols-outlined text-[16px] text-tertiary">inventory_2</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tagged by Attendant: Marites D.</span>
+</div>
+</div>
+</div>
+<!-- Step 5: Completed & Handed Over (Pending) -->
+<div class="flex items-start gap-space-md relative">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-outline flex items-center justify-center flex-shrink-0 z-10">
+<span class="material-symbols-outlined text-[18px]">done_all</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-lg text-label-lg text-outline">5. Completed &amp; Claimed</span>
+<span class="font-body-sm text-body-sm text-outline">Pending</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Counter sign-out and digital claim receipt validation</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Order Summary & Payment Settle Tile -->
+<section class="flex flex-col gap-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface px-1">Order Summary &amp; Settle</h2>
+<div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Customer Reference</span>
+<span class="font-label-lg text-label-lg text-on-surface font-bold">Bea S. • 0917-***-4921</span>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-secondary-container/40 text-on-secondary-container font-label-sm text-label-sm font-bold">Walk-in Drop</span>
+</div>
+<div class="flex flex-col gap-2 py-space-sm border-t border-b border-surface-container-high">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Premium Wash + Comforter Care</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">12.0 kg bulk blanket weight tier</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface">₱ 360.00</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Fragrance Upgrade &amp; Softener</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Ariel Sunrise Fresh + Downy Mystique</span>
+</div>
+<span class="font-label-lg text-label-lg text-on-surface">₱ 60.00</span>
+</div>
+</div>
+<!-- Total & Unpaid Notice -->
+<div class="flex items-center justify-between pt-1">
+<span class="font-headline-sm text-headline-sm text-on-surface">Total Amount</span>
+<span class="font-currency-display text-currency-display text-primary">₱ 420.00</span>
+</div>
+<!-- Pay Later Warning Callout -->
+<div class="rounded-lg bg-surface-container p-space-sm flex flex-col gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[20px] flex-shrink-0 mt-0.5">account_balance_wallet</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-bold">Pay Later Balance: ₱ 420.00</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">You can settle comfortably via GCash or Cash at the counter upon pickup.</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-1">
+<button class="h-12 px-space-sm rounded-lg bg-[#005CE6] text-white font-label-md text-label-md font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-98 transition-transform" onclick="simulateGCashPrompt()">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+<span>Pay with GCash</span>
+</button>
+<button class="h-12 px-space-sm rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 hover:bg-surface-container active:scale-98 transition-transform" onclick="showCounterCashPrompt()">
+<span class="material-symbols-outlined text-[18px]">point_of_sale</span>
+<span>Cash at Desk</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Branch Quick Contact & Directions -->
+<section class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Store Contact &amp; Navigation</h3>
+<span class="font-label-sm text-label-sm text-tertiary-container font-semibold">Open Now</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[20px]">store</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface">Katipunan Ave. Branch (QC)</span>
+<span class="font-body-sm text-body-sm truncate">Mon–Sun: 7:00 AM – 8:00 PM • Landmark: Across Ateneo Gate 3</span>
+</div>
+</div>
+<!-- Action Button Grid -->
+<div class="grid grid-cols-3 gap-2 pt-2">
+<a class="h-11 rounded-lg bg-surface-container-low flex flex-col items-center justify-center text-primary hover:bg-surface-container transition-colors" href="tel:+639171234567">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span class="font-label-sm text-label-sm font-semibold">Call Shop</span>
+</a>
+<a class="h-11 rounded-lg bg-surface-container-low flex flex-col items-center justify-center text-primary hover:bg-surface-container transition-colors" href="sms:+639171234567">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span class="font-label-sm text-label-sm font-semibold">Send SMS</span>
+</a>
+<a class="h-11 rounded-lg bg-surface-container-low flex flex-col items-center justify-center text-primary hover:bg-surface-container transition-colors" href="https://maps.google.com/?q=Katipunan+Avenue+Quezon+City" rel="noopener noreferrer" target="_blank">
+<span class="material-symbols-outlined text-[18px]">directions</span>
+<span class="font-label-sm text-label-sm font-semibold">Waze / Maps</span>
+</a>
+</div>
+</section>
+<!-- Subtle 'Add to Home Screen' PWA Reminder Widget -->
+<aside class="relative rounded-xl bg-gradient-to-r from-surface-container-high to-surface-variant p-space-md shadow-sm flex items-center justify-between gap-space-sm" id="pwaCard">
+<div class="flex items-start gap-space-sm min-w-0">
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">bookmark_add</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-bold">Bookmark this Load</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Instant 1-tap live check on your home screen</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5 flex-shrink-0">
+<button class="px-3 py-1.5 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-bold shadow-sm active:scale-95 transition-transform" onclick="bookmarkNotification()">
+          Add
+        </button>
+<button aria-label="Dismiss banner" class="w-8 h-8 rounded-full text-outline hover:text-on-surface flex items-center justify-center active:scale-90" onclick="dismissPWACard()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</aside>
+</div>
+<!-- Toast Notification Overlay for Copy & GCash simulation -->
+<div class="fixed bottom-16 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 opacity-0 translate-y-4 max-w-xs w-full px-4" id="toastNotification">
+<div class="bg-inverse-surface text-inverse-on-surface py-2.5 px-4 rounded-full shadow-xl flex items-center justify-center gap-2 text-center">
+<span class="material-symbols-outlined text-[18px] text-tertiary-fixed" id="toastIcon">check_circle</span>
+<span class="font-label-md text-label-md" id="toastMessage">Claim Code copied to clipboard!</span>
+</div>
+</div>
+</div>
+<script>
+  function showToast(message, icon = 'check_circle') {
+    const toast = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMessage');
+    const toastIco = document.getElementById('toastIcon');
+    if (!toast) return;
+
+    toastMsg.textContent = message;
+    toastIco.textContent = icon;
+    
+    toast.classList.remove('opacity-0', 'translate-y-4');
+    toast.classList.add('opacity-100', 'translate-y-0');
+
+    setTimeout(() => {
+      toast.classList.remove('opacity-100', 'translate-y-0');
+      toast.classList.add('opacity-0', 'translate-y-4');
+    }, 2800);
+  }
+
+  function copyClaimCode() {
+    const code = '#AQ-1081';
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('Claim Code #AQ-1081 copied!');
+      }).catch(() => {
+        showToast('Claim Code: #AQ-1081');
+      });
+    } else {
+      showToast('Claim Code: #AQ-1081');
+    }
+
+    const copyIcon = document.getElementById('copyIcon');
+    if (copyIcon) {
+      copyIcon.textContent = 'done';
+      setTimeout(() => {
+        copyIcon.textContent = 'content_copy';
+      }, 2000);
+    }
+  }
+
+  function simulateGCashPrompt() {
+    showToast('Redirecting to GCash Express Checkout (₱420.00)...', 'payments');
+  }
+
+  function showCounterCashPrompt() {
+    showToast('Cash noted: Please prepare ₱420.00 at counter.', 'point_of_sale');
+  }
+
+  function bookmarkNotification() {
+    showToast('Press Share ➦ then "Add to Home Screen"', 'add_to_home_screen');
+  }
+
+  function dismissPWACard() {
+    const card = document.getElementById('pwaCard');
+    if (card) {
+      card.style.display = 'none';
+    }
+  }
+</script></main><footer class="fixed bottom-0 w-full z-40 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-1px_6px_rgba(0,0,0,0.03)]"><div class="h-12 px-margin flex items-center justify-between max-w-lg mx-auto text-on-surface-variant"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary">pin_drop</span><span class="font-body-sm text-body-sm truncate max-w-[200px]">Katipunan Ave, Quezon City</span></div><div class="flex items-center gap-space-sm"><span class="font-label-sm text-label-sm text-tertiary-container">Open • Closes 9 PM</span></div></div></footer></body></html>

@@ -303,7 +303,7 @@ export default function App() {
   }
 
   return (
-    <div className={`min-h-screen bg-[#faf8ff] dark:bg-[#0b1120] text-[#131b2e] dark:text-white font-sans flex flex-col ${isDarkMode ? 'dark' : ''}`}>
+    <div className={`min-h-screen bg-surface text-on-surface font-body-md text-body-md flex flex-col ${isDarkMode ? 'dark' : ''}`}>
       {/* Top Universal Header */}
       <Header
         currentTab={currentTab}

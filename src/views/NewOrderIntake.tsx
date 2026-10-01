@@ -36,12 +36,9 @@ export const NewOrderIntake: React.FC<NewOrderIntakeProps> = ({
 
   // Payment method
   const [paymentMethod, setPaymentMethod] = useState<'cash_paid' | 'gcash_paid' | 'pay_later'>('gcash_paid');
-  const [gcashRef, setGcashRef] = useState('#9042-8819-01');
 
-  // Staging & Attendant
-  const [targetTime, setTargetTime] = useState('Today 5:30 PM');
-  const [shelfBin, setShelfBin] = useState('Shelf B-07 (Upper Bin)');
-  const [attendant, setAttendant] = useState('Liza M. (Shift Lead)');
+  // Staging
+  const [shelfBin] = useState('Shelf B-07 (Upper Bin)');
 
   // Calculations
   const calculateBase = () => {
@@ -82,8 +79,9 @@ export const NewOrderIntake: React.FC<NewOrderIntakeProps> = ({
       .filter((a) => a.checked)
       .map((a) => a.name);
 
+    const orderNumber = Math.floor(1084 + Math.random() * 20);
     const newOrder: LaundryOrder = {
-      id: `#AQ-${Math.floor(1084 + Math.random() * 20)}`,
+      id: `#AQ-${orderNumber}`,
       customerName: custName,
       customerPhone: `+63 ${custPhone}`,
       customerInitial: custName.split(' ').map((n) => n[0]).join('').substring(0, 2).toUpperCase() || 'CU',
@@ -104,93 +102,99 @@ export const NewOrderIntake: React.FC<NewOrderIntakeProps> = ({
       addonAmount: addonTotal,
       totalAmount: grandTotal,
       paymentStatus: paymentMethod,
-      paymentRef: paymentMethod === 'gcash_paid' ? gcashRef : undefined,
       status: 'intake',
-      statusLabel: 'Intake Queue',
+      statusLabel: 'Intake Bay B-07',
       stageStep: 1,
       shelfBin,
-      intakeTime: 'Today, Oct 24 • Just now',
-      targetReadyTime: targetTime,
-      notes: `Attendant: ${attendant}`,
-      intakeAttendant: attendant
+      intakeTime: 'Today • Just now',
+      targetReadyTime: 'Today 5:30 PM',
+      completedTime: '',
+      notes: 'Fresh intake tagged at POS Counter. Standard cycle queue.',
+      intakeAttendant: 'Maria A. (Shift Lead)',
+      smsNotification: {
+        delivered: true,
+        text: `Aquaspin Notice: Order #AQ-${orderNumber} received (${weightKg}kg). Estimated ready at 5:30 PM.`,
+        timestamp: 'Just now'
+      }
     };
 
     onSaveOrder(newOrder);
+    showToast(`Order #AQ-${orderNumber} saved and claim ticket printed!`, 'receipt');
     onOpenReceipt(newOrder);
-    showToast(`Order ${newOrder.id} saved & queued for ${custName}!`, 'print');
   };
 
   return (
-    <div className="flex flex-col w-full px-4 pt-3 pb-24 gap-4 max-w-lg mx-auto">
+    <div className="flex flex-col w-full px-margin pb-space-xl space-y-space-md max-w-lg mx-auto">
       {/* Ticket Header & Shelf Staging Highlight */}
-      <div className="w-full bg-white dark:bg-[#1a2235] rounded-2xl p-4 shadow-sm border border-[#eaedff] dark:border-[#283044] flex items-center justify-between">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 rounded-full bg-[#cce5ff] dark:bg-[#283044] flex items-center justify-center text-[#006194] dark:text-[#93ccff] flex-shrink-0">
+      <div className="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between border border-outline-variant/20">
+        <div className="flex items-center gap-space-sm min-w-0">
+          <div className="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary flex-shrink-0">
             <span className="material-symbols-outlined text-[22px]">receipt_long</span>
           </div>
           <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <span className="font-bold text-sm text-[#131b2e] dark:text-white">Intake Batch</span>
-              <span className="text-[10px] font-bold bg-[#007bb9] text-white px-2 py-0.5 rounded-full tracking-wide">
+            <div className="flex items-center gap-space-xs">
+              <span className="font-headline-sm text-headline-sm text-on-surface font-bold">Intake Batch</span>
+              <span className="font-label-sm text-label-sm bg-primary-container text-on-primary-container px-2 py-0.5 rounded-full font-bold tracking-wide">
                 #AQ-1083
               </span>
             </div>
-            <p className="text-xs text-[#707881] dark:text-[#bfc7d2] truncate">
-              Express Counter Lane 02 • Katipunan
+            <p className="font-body-sm text-body-sm text-on-surface-variant truncate">
+              Express Counter Lane 02 • Katipunan Bay
             </p>
           </div>
         </div>
-        <div className="flex flex-col items-end">
-          <span className="text-[10px] font-bold text-[#707881] uppercase tracking-wider">Staging</span>
-          <span className="text-xs font-bold text-[#006194] dark:text-[#93ccff] bg-[#cce5ff]/50 dark:bg-[#283044] px-2 py-0.5 rounded-md">
+        <div className="flex flex-col items-end flex-shrink-0">
+          <span className="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold">Staging</span>
+          <span className="font-label-lg text-label-lg text-primary bg-primary-fixed/40 px-2 py-0.5 rounded font-bold">
             Bay B-07
           </span>
         </div>
       </div>
 
       {/* SECTION 1: Customer Profile */}
-      <section className="w-full bg-white dark:bg-[#1a2235] rounded-2xl p-4 shadow-sm border border-[#eaedff] dark:border-[#283044] space-y-3">
+      <section className="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-sm border border-outline-variant/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[#006194] text-[20px]">person</span>
-            <h2 className="text-xs font-bold text-[#131b2e] dark:text-white uppercase tracking-wider">
-              Customer Profile
-            </h2>
+            <span className="material-symbols-outlined text-primary text-[20px]">person</span>
+            <h2 className="font-label-lg text-label-lg text-on-surface font-bold">Customer Profile</h2>
           </div>
           <button
+            type="button"
             onClick={() => {
-              const nextCust = customers[1];
+              const nextCust = customers[(customers.indexOf(selectedCustomer) + 1) % customers.length] || customers[0];
               setSelectedCustomer(nextCust);
               setCustName(nextCust.name);
               setCustPhone(nextCust.phone.replace('+63 ', ''));
               showToast(`Switched customer profile to ${nextCust.name}`, 'person');
             }}
-            className="text-[11px] font-semibold text-[#006194] dark:text-[#93ccff] flex items-center gap-0.5 hover:underline"
+            className="font-label-sm text-label-sm text-primary flex items-center gap-0.5 hover:underline font-semibold"
           >
-            <span className="material-symbols-outlined text-[15px]">history</span>
-            Recent (F4)
+            <span className="material-symbols-outlined text-[16px]">history</span>
+            Switch Profile
           </button>
         </div>
 
         {/* Name input */}
-        <div className="relative flex items-center">
-          <input
-            type="text"
-            value={custName}
-            onChange={(e) => setCustName(e.target.value)}
-            placeholder="Enter customer name..."
-            className="w-full bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white text-xs font-semibold rounded-xl px-3 py-2.5 outline-none focus:bg-white dark:focus:bg-[#1a2235] focus:ring-2 focus:ring-[#006194] border border-[#eaedff] dark:border-[#283044] pr-20"
-          />
-          <div className="absolute right-3 flex items-center gap-1">
-            <span className="material-symbols-outlined text-[#00685f] text-[18px]">verified</span>
-            <span className="text-[10px] font-bold text-[#00685f]">VIP</span>
+        <div className="space-y-1">
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              value={custName}
+              onChange={(e) => setCustName(e.target.value)}
+              placeholder="Enter customer name..."
+              className="w-full bg-surface-container-low text-on-surface font-body-md text-body-md rounded-lg px-3 py-2.5 outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:shadow-md transition-all pr-20 border border-outline-variant/30"
+            />
+            <div className="absolute right-2.5 flex items-center gap-1">
+              <span className="material-symbols-outlined text-tertiary text-[18px]">verified</span>
+              <span className="font-label-sm text-label-sm text-tertiary font-bold">VIP</span>
+            </div>
           </div>
         </div>
 
         {/* Phone & Suki Stamps */}
-        <div className="flex flex-col sm:flex-row gap-2">
-          <div className="flex-1 flex bg-[#f2f3ff] dark:bg-[#131b2e] rounded-xl overflow-hidden border border-[#eaedff] dark:border-[#283044]">
-            <div className="bg-[#eaedff] dark:bg-[#283044] px-3 flex items-center text-[#707881] text-xs font-bold">
+        <div className="flex flex-col sm:flex-row gap-space-sm">
+          <div className="flex-1 flex bg-surface-container-low rounded-lg overflow-hidden border border-outline-variant/30 focus-within:bg-surface-container-lowest focus-within:ring-2 focus-within:ring-primary transition-all">
+            <div className="bg-surface-container px-3 flex items-center text-on-surface-variant font-label-md text-label-md font-bold">
               +63
             </div>
             <input
@@ -198,56 +202,56 @@ export const NewOrderIntake: React.FC<NewOrderIntakeProps> = ({
               value={custPhone}
               onChange={(e) => setCustPhone(e.target.value)}
               placeholder="9XX XXX XXXX"
-              className="w-full bg-transparent text-[#131b2e] dark:text-white text-xs font-semibold px-3 py-2 outline-none"
+              className="w-full bg-transparent text-on-surface font-body-md text-body-md px-3 py-2 outline-none"
             />
           </div>
-          <div className="flex items-center justify-between sm:justify-start gap-2 bg-[#e6f4f2] dark:bg-[#004b45] px-3 py-2 rounded-xl">
-            <div className="flex items-center gap-1 text-[#00685f] dark:text-[#89f5e7]">
+          <div className="flex items-center justify-between sm:justify-start gap-2 bg-tertiary-container/10 px-3 py-2 rounded-lg border border-tertiary/20">
+            <div className="flex items-center gap-1 text-tertiary">
               <span className="material-symbols-outlined text-[18px]">stars</span>
-              <span className="text-xs font-bold">8/10 Stamps</span>
+              <span className="font-label-md text-label-md font-bold">
+                {selectedCustomer?.stampsCount || 8}/10 Stamps
+              </span>
             </div>
-            <span className="text-[10px] text-[#707881] dark:text-white/80">(Next Load Free 50%)</span>
+            <span className="font-label-sm text-label-sm text-on-surface-variant">(Next Load Free 50%)</span>
           </div>
         </div>
       </section>
 
-      {/* SECTION 2: Service & Load Sizing */}
-      <section className="w-full bg-white dark:bg-[#1a2235] rounded-2xl p-4 shadow-sm border border-[#eaedff] dark:border-[#283044] space-y-4">
+      {/* SECTION 2: Service Selection & Load Sizing */}
+      <section className="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md border border-outline-variant/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[#006194] text-[20px]">local_laundry_service</span>
-            <h2 className="text-xs font-bold text-[#131b2e] dark:text-white uppercase tracking-wider">
-              Service & Load Sizing
-            </h2>
+            <span className="material-symbols-outlined text-primary text-[20px]">local_laundry_service</span>
+            <h2 className="font-label-lg text-label-lg text-on-surface font-bold">Service & Load Sizing</h2>
           </div>
-          <span className="text-[10px] bg-[#eaedff] dark:bg-[#283044] px-2 py-0.5 rounded text-[#707881] font-semibold">
+          <span className="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-on-surface-variant font-semibold">
             Min. 7 kg load
           </span>
         </div>
 
         {/* 4 Service Cards */}
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-2 gap-space-sm">
           <button
             type="button"
             onClick={() => {
               setServiceType('wash_dry_fold');
               setRatePerKg(35);
             }}
-            className={`text-left p-3 rounded-xl flex flex-col justify-between transition-all ${
+            className={`text-left p-3 rounded-lg flex flex-col justify-between transition-all ${
               serviceType === 'wash_dry_fold'
-                ? 'bg-[#007bb9] text-white shadow-md'
-                : 'bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white hover:bg-[#eaedff]'
+                ? 'bg-primary-container text-on-primary-container shadow-sm'
+                : 'bg-surface-container-low text-on-surface hover:bg-surface-container'
             }`}
           >
             <div className="flex justify-between items-start">
-              <span className="text-xs font-bold">Wash-Dry-Fold</span>
+              <span className="font-label-md text-label-md font-bold">Wash-Dry-Fold</span>
               <span className="material-symbols-outlined text-[18px]">
                 {serviceType === 'wash_dry_fold' ? 'check_circle' : 'radio_button_unchecked'}
               </span>
             </div>
             <div className="mt-2">
-              <span className="text-sm font-bold">₱35</span>
-              <span className="text-[10px] opacity-80">/kg</span>
+              <span className="font-currency-body text-currency-body font-bold">₱35</span>
+              <span className="font-label-sm text-label-sm opacity-80">/kg</span>
             </div>
           </button>
 
@@ -257,21 +261,21 @@ export const NewOrderIntake: React.FC<NewOrderIntakeProps> = ({
               setServiceType('self_wash');
               setRatePerKg(80);
             }}
-            className={`text-left p-3 rounded-xl flex flex-col justify-between transition-all ${
+            className={`text-left p-3 rounded-lg flex flex-col justify-between transition-all ${
               serviceType === 'self_wash'
-                ? 'bg-[#007bb9] text-white shadow-md'
-                : 'bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white hover:bg-[#eaedff]'
+                ? 'bg-primary-container text-on-primary-container shadow-sm'
+                : 'bg-surface-container-low text-on-surface hover:bg-surface-container'
             }`}
           >
             <div className="flex justify-between items-start">
-              <span className="text-xs font-bold">Self-Service Wash</span>
+              <span className="font-label-md text-label-md font-bold">Self-Service Wash</span>
               <span className="material-symbols-outlined text-[18px]">
                 {serviceType === 'self_wash' ? 'check_circle' : 'radio_button_unchecked'}
               </span>
             </div>
             <div className="mt-2">
-              <span className="text-sm font-bold">₱80</span>
-              <span className="text-[10px] opacity-80">/load</span>
+              <span className="font-currency-body text-currency-body font-bold">₱80</span>
+              <span className="font-label-sm text-label-sm opacity-80">/load</span>
             </div>
           </button>
 
@@ -281,21 +285,21 @@ export const NewOrderIntake: React.FC<NewOrderIntakeProps> = ({
               setServiceType('self_dry');
               setRatePerKg(70);
             }}
-            className={`text-left p-3 rounded-xl flex flex-col justify-between transition-all ${
+            className={`text-left p-3 rounded-lg flex flex-col justify-between transition-all ${
               serviceType === 'self_dry'
-                ? 'bg-[#007bb9] text-white shadow-md'
-                : 'bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white hover:bg-[#eaedff]'
+                ? 'bg-primary-container text-on-primary-container shadow-sm'
+                : 'bg-surface-container-low text-on-surface hover:bg-surface-container'
             }`}
           >
             <div className="flex justify-between items-start">
-              <span className="text-xs font-bold">Self-Service Dry</span>
+              <span className="font-label-md text-label-md font-bold">Self-Service Dry</span>
               <span className="material-symbols-outlined text-[18px]">
                 {serviceType === 'self_dry' ? 'check_circle' : 'radio_button_unchecked'}
               </span>
             </div>
             <div className="mt-2">
-              <span className="text-sm font-bold">₱70</span>
-              <span className="text-[10px] opacity-80">/load</span>
+              <span className="font-currency-body text-currency-body font-bold">₱70</span>
+              <span className="font-label-sm text-label-sm opacity-80">/load</span>
             </div>
           </button>
 
@@ -305,342 +309,195 @@ export const NewOrderIntake: React.FC<NewOrderIntakeProps> = ({
               setServiceType('comforter');
               setRatePerKg(120);
             }}
-            className={`text-left p-3 rounded-xl flex flex-col justify-between transition-all ${
+            className={`text-left p-3 rounded-lg flex flex-col justify-between transition-all ${
               serviceType === 'comforter'
-                ? 'bg-[#007bb9] text-white shadow-md'
-                : 'bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white hover:bg-[#eaedff]'
+                ? 'bg-primary-container text-on-primary-container shadow-sm'
+                : 'bg-surface-container-low text-on-surface hover:bg-surface-container'
             }`}
           >
             <div className="flex justify-between items-start">
-              <span className="text-xs font-bold">Bulky Comforter</span>
+              <span className="font-label-md text-label-md font-bold">Bulky Comforter</span>
               <span className="material-symbols-outlined text-[18px]">
                 {serviceType === 'comforter' ? 'check_circle' : 'radio_button_unchecked'}
               </span>
             </div>
             <div className="mt-2">
-              <span className="text-sm font-bold">₱120</span>
-              <span className="text-[10px] opacity-80">/piece</span>
+              <span className="font-currency-body text-currency-body font-bold">₱120</span>
+              <span className="font-label-sm text-label-sm opacity-80">/piece</span>
             </div>
           </button>
         </div>
 
-        {/* Live Weight Stepper Area */}
-        <div className="bg-[#f2f3ff] dark:bg-[#131b2e] rounded-xl p-3.5 space-y-3 border border-[#eaedff] dark:border-[#283044]">
+        {/* Weight & Drum Scale Integration */}
+        <div className="bg-surface-container-low rounded-lg p-space-sm space-y-space-sm border border-outline-variant/20">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-[#3f4850] dark:text-[#bfc7d2] text-xs font-semibold">
+            <div className="flex items-center gap-1.5 text-on-surface-variant font-label-md text-label-md font-semibold">
               <span className="material-symbols-outlined text-[18px]">scale</span>
               <span>Measured Scale Weight</span>
             </div>
-            <span className="text-[11px] font-bold text-[#006194] dark:text-[#93ccff] flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-[#00685f] animate-ping"></span>
-              Live BLE Scale Connected
+            <span className="font-label-sm text-label-sm text-primary flex items-center gap-0.5 font-bold">
+              <span className="w-2 h-2 rounded-full bg-tertiary animate-ping"></span> Live BLE Scale Connected
             </span>
           </div>
 
-          <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center justify-between gap-space-sm">
             <button
               type="button"
-              onClick={() => setWeightKg((w) => Math.max(1, Math.round((w - 0.5) * 10) / 10))}
-              className="w-12 h-12 rounded-xl bg-[#dae2fd] dark:bg-[#283044] text-[#131b2e] dark:text-white flex items-center justify-center font-extrabold text-2xl hover:bg-[#cce5ff] active:scale-95 transition-all"
+              onClick={() => setWeightKg((w) => Math.max(1, +(w - 0.5).toFixed(1)))}
+              className="w-11 h-11 rounded-lg bg-surface-container-lowest text-primary shadow-sm hover:bg-surface-container flex items-center justify-center active:scale-95 transition-transform"
             >
-              -
+              <span className="material-symbols-outlined text-[22px]">remove</span>
             </button>
-            <div className="flex-1 flex flex-col items-center justify-center bg-white dark:bg-[#1a2235] rounded-xl py-2 shadow-xs border border-[#eaedff] dark:border-[#283044]">
-              <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-extrabold text-[#006194] dark:text-[#93ccff]">
-                  {weightKg.toFixed(1)}
-                </span>
-                <span className="text-sm font-bold text-[#707881]">kg</span>
+
+            <div className="flex flex-col items-center">
+              <div className="font-currency-display text-currency-display text-on-surface font-extrabold tracking-tight">
+                {weightKg.toFixed(1)} <span className="font-headline-sm text-headline-sm text-on-surface-variant font-normal">kg</span>
               </div>
-              <span className="text-[11px] text-[#707881]">
-                {drumCount} Wash • {drumCount} Dryer Drum
+              <span className="font-label-sm text-label-sm text-on-surface-variant">
+                ~{drumCount} {drumCount > 1 ? 'drums' : 'drum'} load sizing
               </span>
             </div>
+
             <button
               type="button"
-              onClick={() => setWeightKg((w) => Math.round((w + 0.5) * 10) / 10)}
-              className="w-12 h-12 rounded-xl bg-[#dae2fd] dark:bg-[#283044] text-[#131b2e] dark:text-white flex items-center justify-center font-extrabold text-2xl hover:bg-[#cce5ff] active:scale-95 transition-all"
+              onClick={() => setWeightKg((w) => +(w + 0.5).toFixed(1))}
+              className="w-11 h-11 rounded-lg bg-surface-container-lowest text-primary shadow-sm hover:bg-surface-container flex items-center justify-center active:scale-95 transition-transform"
             >
-              +
+              <span className="material-symbols-outlined text-[22px]">add</span>
             </button>
-          </div>
-
-          {/* Quick Preset Pills */}
-          <div className="grid grid-cols-4 gap-2 pt-1">
-            {[7.0, 8.0, 10.0, 12.0].map((wt) => (
-              <button
-                key={wt}
-                type="button"
-                onClick={() => setWeightKg(wt)}
-                className={`py-1.5 rounded-lg text-xs font-bold text-center transition-all ${
-                  weightKg === wt
-                    ? 'bg-[#006194] text-white shadow-xs'
-                    : 'bg-white dark:bg-[#1a2235] text-[#131b2e] dark:text-white hover:bg-[#eaedff]'
-                }`}
-              >
-                {wt} kg
-              </button>
-            ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 3: Care Add-Ons & Fragrance Bar */}
-      <section className="w-full bg-white dark:bg-[#1a2235] rounded-2xl p-4 shadow-sm border border-[#eaedff] dark:border-[#283044] space-y-3">
+      {/* SECTION 3: Chemical & Treatment Add-ons */}
+      <section className="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-sm border border-outline-variant/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[#006194] text-[20px]">sanitizer</span>
-            <h2 className="text-xs font-bold text-[#131b2e] dark:text-white uppercase tracking-wider">
-              Detergents & Special Care
-            </h2>
+            <span className="material-symbols-outlined text-primary text-[20px]">sanitizer</span>
+            <h2 className="font-label-lg text-label-lg text-on-surface font-bold">Chemicals & Customization</h2>
           </div>
-          <span className="text-[10px] text-[#00685f] font-semibold">Select all that apply</span>
+          <span className="font-label-sm text-label-sm text-on-surface-variant">Optional booster</span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-xs">
           {Object.entries(addons).map(([key, item]) => (
             <label
               key={key}
-              className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all border ${
+              onClick={() => toggleAddon(key)}
+              className={`p-3 rounded-lg flex items-center justify-between cursor-pointer border transition-colors ${
                 item.checked
-                  ? 'bg-[#006194]/10 border-[#006194]/40'
-                  : 'bg-[#f2f3ff] dark:bg-[#131b2e] border-transparent'
+                  ? 'bg-surface-container border-primary/40'
+                  : 'bg-surface-container-low border-transparent hover:bg-surface-container'
               }`}
             >
-              <div className="flex items-center gap-2.5 min-w-0">
-                <input
-                  type="checkbox"
-                  checked={item.checked}
-                  onChange={() => toggleAddon(key)}
-                  className="w-4 h-4 rounded text-[#006194] focus:ring-0"
-                />
-                <div className="min-w-0">
-                  <p className="text-xs font-bold text-[#131b2e] dark:text-white truncate">{item.name}</p>
-                  <p className="text-[11px] text-[#707881]">
-                    {key === 'ariel'
-                      ? 'Triple action antibacterial'
-                      : key === 'downy'
-                      ? 'French perfume microcapsules'
-                      : key === 'bleach'
-                      ? 'Oxygen bleach brightener'
-                      : 'Wrinkle-free garment cover'}
-                  </p>
+              <div className="flex items-center gap-2">
+                <div
+                  className={`w-5 h-5 rounded flex items-center justify-center transition-colors ${
+                    item.checked ? 'bg-primary text-on-primary' : 'bg-surface-container border border-outline-variant'
+                  }`}
+                >
+                  {item.checked && <span className="material-symbols-outlined text-[14px] font-bold">check</span>}
                 </div>
+                <span className="font-label-md text-label-md text-on-surface font-semibold">{item.name}</span>
               </div>
-              <span className="text-xs font-bold text-[#006194] dark:text-[#93ccff] flex-shrink-0">
-                +₱{item.price.toFixed(2)}
-              </span>
+              <span className="font-label-md text-label-md text-primary font-bold">+₱{item.price}</span>
             </label>
           ))}
         </div>
       </section>
 
-      {/* SECTION 4: Live Ledger & Settlement */}
-      <section className="w-full bg-white dark:bg-[#1a2235] rounded-2xl p-4 shadow-sm border border-[#eaedff] dark:border-[#283044] space-y-3">
+      {/* SECTION 4: Payment & Checkout Summary */}
+      <section className="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md border border-outline-variant/20">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[#006194] text-[20px]">payments</span>
-            <h2 className="text-xs font-bold text-[#131b2e] dark:text-white uppercase tracking-wider">
-              Amount & Payment
-            </h2>
+            <span className="material-symbols-outlined text-primary text-[20px]">payments</span>
+            <h2 className="font-label-lg text-label-lg text-on-surface font-bold">Payment Method</h2>
           </div>
-          <span className="text-[11px] text-[#707881]">POS Terminal 01</span>
+          <span className="font-label-sm text-label-sm text-tertiary font-bold">Auto Receipt</span>
         </div>
 
-        {/* Live Bill Breakdown Tile */}
-        <div className="bg-[#f2f3ff] dark:bg-[#131b2e] rounded-xl p-3.5 space-y-2 border border-[#eaedff] dark:border-[#283044]">
-          <div className="flex justify-between text-xs text-[#707881]">
-            <span>
-              {serviceType === 'wash_dry_fold'
-                ? `Wash-Dry-Fold (${weightKg} kg @ ₱${ratePerKg}/kg)`
-                : `Self-Service (${drumCount} loads)`}
-            </span>
-            <span className="font-semibold text-[#131b2e] dark:text-white">₱{baseTotal.toFixed(2)}</span>
-          </div>
-          <div className="flex justify-between text-xs text-[#707881]">
-            <span>
-              Detergents & Add-ons ({Object.values(addons).filter((a) => a.checked).length} items)
-            </span>
-            <span className="font-semibold text-[#131b2e] dark:text-white">₱{addonTotal.toFixed(2)}</span>
-          </div>
+        {/* Method selector */}
+        <div className="grid grid-cols-3 gap-space-xs">
+          <button
+            type="button"
+            onClick={() => setPaymentMethod('cash_paid')}
+            className={`py-2 px-1 rounded-lg text-center font-label-md text-label-md font-bold transition-all ${
+              paymentMethod === 'cash_paid'
+                ? 'bg-tertiary text-on-tertiary shadow-sm'
+                : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
+            }`}
+          >
+            Counter Cash
+          </button>
 
-          <div className="pt-2 flex justify-between items-baseline bg-white dark:bg-[#1a2235] px-3 py-2 rounded-xl mt-2 shadow-xs border border-[#eaedff] dark:border-[#283044]">
-            <div>
-              <span className="text-xs font-bold text-[#131b2e] dark:text-white block">Total Due</span>
-              <p className="text-[10px] text-[#00685f] font-semibold">VAT Inclusive • Eco Pouch Bagged</p>
-            </div>
-            <span className="text-2xl font-extrabold text-[#006194] dark:text-[#93ccff]">
+          <button
+            type="button"
+            onClick={() => setPaymentMethod('gcash_paid')}
+            className={`py-2 px-1 rounded-lg text-center font-label-md text-label-md font-bold transition-all ${
+              paymentMethod === 'gcash_paid'
+                ? 'bg-secondary text-on-secondary shadow-sm'
+                : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
+            }`}
+          >
+            GCash QR
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setPaymentMethod('pay_later')}
+            className={`py-2 px-1 rounded-lg text-center font-label-md text-label-md font-bold transition-all ${
+              paymentMethod === 'pay_later'
+                ? 'bg-error-container text-on-error-container shadow-sm'
+                : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
+            }`}
+          >
+            Pay on Pickup
+          </button>
+        </div>
+
+        {/* Cost breakdown */}
+        <div className="bg-surface-container-low rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm">
+          <div className="flex justify-between text-on-surface-variant">
+            <span>Base Service ({weightKg} kg):</span>
+            <span className="font-currency-body text-currency-body text-on-surface font-semibold">
+              ₱{baseTotal.toFixed(2)}
+            </span>
+          </div>
+          <div className="flex justify-between text-on-surface-variant">
+            <span>Selected Addons:</span>
+            <span className="font-currency-body text-currency-body text-on-surface font-semibold">
+              ₱{addonTotal.toFixed(2)}
+            </span>
+          </div>
+          <div className="pt-2 border-t border-outline-variant/30 flex justify-between items-baseline">
+            <span className="font-label-lg text-label-lg font-bold text-on-surface">Total Amount Due:</span>
+            <span className="font-currency-display text-currency-display text-primary font-extrabold tracking-tight">
               ₱{grandTotal.toFixed(2)}
             </span>
           </div>
         </div>
 
-        {/* Payment Badges / Methods */}
-        <div className="space-y-1.5">
-          <label className="text-xs font-bold text-[#707881] block">Settlement Status</label>
-          <div className="grid grid-cols-3 gap-2">
+        {/* Action CTAs */}
+        <div className="flex flex-col sm:flex-row gap-space-xs pt-1">
+          {onHoldBasket && (
             <button
               type="button"
-              onClick={() => setPaymentMethod('cash_paid')}
-              className={`p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 transition-all ${
-                paymentMethod === 'cash_paid'
-                  ? 'bg-[#16a34a] text-white shadow-md'
-                  : 'bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white hover:bg-[#eaedff]'
-              }`}
+              onClick={onHoldBasket}
+              className="py-3 px-4 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md font-semibold transition-colors active:scale-95"
             >
-              <span className="material-symbols-outlined text-[20px]">payments</span>
-              <span className="text-[11px] font-bold">Cash Paid</span>
+              Hold in Basket
             </button>
-
-            <button
-              type="button"
-              onClick={() => setPaymentMethod('gcash_paid')}
-              className={`p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 transition-all ${
-                paymentMethod === 'gcash_paid'
-                  ? 'bg-[#005ce6] text-white shadow-md'
-                  : 'bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white hover:bg-[#eaedff]'
-              }`}
-            >
-              <span className="material-symbols-outlined text-[20px]">qr_code_scanner</span>
-              <span className="text-[11px] font-bold">GCash Paid</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setPaymentMethod('pay_later')}
-              className={`p-2.5 rounded-xl flex flex-col items-center justify-center gap-1 transition-all ${
-                paymentMethod === 'pay_later'
-                  ? 'bg-[#ba1a1a] text-white shadow-md'
-                  : 'bg-[#ffdad6]/60 dark:bg-[#93000a]/30 text-[#ba1a1a] dark:text-[#ffdad6]'
-              }`}
-            >
-              <span className="material-symbols-outlined text-[20px]">pending_actions</span>
-              <span className="text-[11px] font-bold">Pay Later</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Quick GCash Reference Prompt */}
-        {paymentMethod === 'gcash_paid' && (
-          <div className="flex items-center gap-2.5 bg-[#005ce6]/10 rounded-xl p-2.5 border border-[#005ce6]/20">
-            <span className="material-symbols-outlined text-[#005ce6] text-[22px]">qr_code_2</span>
-            <div className="flex-1 min-w-0">
-              <input
-                type="text"
-                value={gcashRef}
-                onChange={(e) => setGcashRef(e.target.value)}
-                className="text-xs font-bold text-[#131b2e] dark:text-white bg-transparent outline-none w-full"
-                placeholder="GCash Ref: #9042-8819-01"
-              />
-              <p className="text-[11px] text-[#707881] truncate">Customer sent proof on terminal scanner</p>
-            </div>
-            <span className="text-[10px] font-bold text-[#005ce6] px-2 py-1 bg-white dark:bg-[#1a2235] rounded-lg shadow-xs">
-              Verified
-            </span>
-          </div>
-        )}
-      </section>
-
-      {/* SECTION 5: Schedule & Shelf Staging */}
-      <section className="w-full bg-white dark:bg-[#1a2235] rounded-2xl p-4 shadow-sm border border-[#eaedff] dark:border-[#283044] space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[#006194] text-[20px]">schedule</span>
-            <h2 className="text-xs font-bold text-[#131b2e] dark:text-white uppercase tracking-wider">
-              Target Ready Time & Staging
-            </h2>
-          </div>
-          <span className="text-[10px] text-[#00685f] font-bold flex items-center gap-0.5">
-            <span className="material-symbols-outlined text-[13px]">bolt</span> Standard (3 hrs)
-          </span>
-        </div>
-
-        {/* Quick Time Buttons */}
-        <div className="grid grid-cols-3 gap-2">
-          {['Today 5:30 PM', '+4 hrs (7:30 PM)', 'Tomorrow 9:00 AM'].map((time) => (
-            <button
-              key={time}
-              type="button"
-              onClick={() => setTargetTime(time)}
-              className={`py-2 px-1 rounded-xl text-center text-xs font-bold transition-all ${
-                targetTime === time
-                  ? 'bg-[#006194] text-white shadow-xs'
-                  : 'bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white hover:bg-[#eaedff]'
-              }`}
-            >
-              {time}
-            </button>
-          ))}
-        </div>
-
-        {/* Shelf Bin & Notes Dropdown */}
-        <div className="grid grid-cols-2 gap-2.5 pt-1">
-          <div>
-            <label className="text-[10px] font-bold text-[#707881] uppercase block mb-1">
-              Staging Bin / Rack
-            </label>
-            <div className="relative">
-              <select
-                value={shelfBin}
-                onChange={(e) => setShelfBin(e.target.value)}
-                className="w-full bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white text-xs font-semibold rounded-xl px-3 py-2 appearance-none outline-none border border-[#eaedff] dark:border-[#283044]"
-              >
-                <option>Shelf B-07 (Upper Bin)</option>
-                <option>Shelf B-08 (Upper Bin)</option>
-                <option>Shelf A-02 (Heavy Rail)</option>
-                <option>Hanger Rack H-04</option>
-              </select>
-              <span className="material-symbols-outlined absolute right-2.5 top-2.5 text-[#707881] text-[18px] pointer-events-none">
-                expand_more
-              </span>
-            </div>
-          </div>
-
-          <div>
-            <label className="text-[10px] font-bold text-[#707881] uppercase block mb-1">
-              Assigned Attendant
-            </label>
-            <div className="relative">
-              <select
-                value={attendant}
-                onChange={(e) => setAttendant(e.target.value)}
-                className="w-full bg-[#f2f3ff] dark:bg-[#131b2e] text-[#131b2e] dark:text-white text-xs font-semibold rounded-xl px-3 py-2 appearance-none outline-none border border-[#eaedff] dark:border-[#283044]"
-              >
-                <option>Liza M. (Shift Lead)</option>
-                <option>Carlos R. (Washer)</option>
-                <option>Ana P. (Folding)</option>
-                <option>Maria Aquino (Stn 1)</option>
-              </select>
-              <span className="material-symbols-outlined absolute right-2.5 top-2.5 text-[#707881] text-[18px] pointer-events-none">
-                expand_more
-              </span>
-            </div>
-          </div>
+          )}
+          <button
+            type="button"
+            onClick={handleSave}
+            className="flex-1 py-3 px-4 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-bold shadow-sm flex items-center justify-center gap-space-xs transition-all active:scale-[0.98]"
+          >
+            <span className="material-symbols-outlined text-[20px]">receipt</span>
+            <span>Save & Issue Claim Receipt</span>
+          </button>
         </div>
       </section>
-
-      {/* BOTTOM ACTIONS */}
-      <div className="pt-1 flex flex-col sm:flex-row gap-2">
-        <button
-          onClick={handleSave}
-          type="button"
-          className="flex-1 h-12 bg-[#006194] text-white font-bold text-sm rounded-2xl flex items-center justify-center gap-2 shadow-md hover:bg-[#007bb9] active:scale-[0.99] transition-all"
-        >
-          <span className="material-symbols-outlined text-[20px]">print</span>
-          <span>Save & Print Ticket QR (₱{grandTotal.toFixed(2)})</span>
-        </button>
-        <button
-          onClick={() => {
-            if (onHoldBasket) onHoldBasket();
-            showToast('Basket saved to Pending Hold queue.', 'pause_circle');
-          }}
-          type="button"
-          className="h-12 px-5 bg-[#eaedff] dark:bg-[#283044] text-[#131b2e] dark:text-white font-bold text-xs rounded-2xl flex items-center justify-center gap-1.5 hover:bg-[#dae2fd] active:scale-95 transition-all"
-        >
-          <span className="material-symbols-outlined text-[18px]">pause_circle</span>
-          <span>Hold Basket</span>
-        </button>
-      </div>
     </div>
   );
 };

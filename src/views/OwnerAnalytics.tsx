@@ -13,408 +13,464 @@ export const OwnerAnalytics: React.FC<OwnerAnalyticsProps> = ({
   const [showExportModal, setShowExportModal] = useState(false);
 
   return (
-    <div className="flex flex-col w-full px-4 pt-3 pb-24 gap-4 max-w-lg mx-auto">
+    <div className="flex flex-col w-full px-margin pb-8 space-y-space-md">
       {/* Title & Date Selector Header */}
-      <section className="flex flex-col gap-2 pt-1">
+      <section className="flex flex-col space-y-space-sm pt-space-xs">
         <div className="flex items-start justify-between">
           <div className="space-y-0.5">
             <div className="flex items-center gap-1.5">
-              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-[#006194]/10 text-[#006194]">
-                <span className="material-symbols-outlined text-[16px]">insights</span>
+              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary/10 text-primary">
+                <span className="material-symbols-outlined text-[15px]">insights</span>
               </span>
-              <h1 className="font-extrabold text-2xl text-[#131b2e] dark:text-white tracking-tight">
-                Owner Analytics & Reports
-              </h1>
+              <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Owner Analytics & Reports</h1>
             </div>
-            <p className="text-xs text-[#707881] dark:text-[#bfc7d2] flex items-center gap-1">
+            <p className="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1">
               <span>Katipunan Branch</span>
-              <span className="inline-block w-1 h-1 rounded-full bg-[#707881]"></span>
+              <span className="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
               <span>FY 2024–2025</span>
             </p>
           </div>
-
+          {/* Export Button */}
           <button
             onClick={() => setShowExportModal(true)}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#eaedff] dark:bg-[#283044] text-[#006194] dark:text-[#93ccff] hover:bg-[#dae2fd] transition-colors shadow-xs active:scale-95"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-surface-container-high text-primary hover:bg-surface-variant transition-colors shadow-sm active:scale-95"
+            type="button"
           >
             <span className="material-symbols-outlined text-[18px]">file_download</span>
-            <span className="text-[11px] font-bold uppercase tracking-wider">Export</span>
+            <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider">Export</span>
           </button>
         </div>
 
         {/* Filter Bar & Date Span */}
-        <div className="bg-white dark:bg-[#1a2235] p-2 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] flex flex-col sm:flex-row items-center justify-between gap-2">
-          <div className="flex items-center bg-[#f2f3ff] dark:bg-[#131b2e] p-1 rounded-xl w-full sm:w-auto">
-            {(['today', 'week', 'month', 'yearly'] as const).map((r) => (
-              <button
-                key={r}
-                type="button"
-                onClick={() => setTimeRange(r)}
-                className={`flex-1 sm:flex-initial px-3 py-1 text-center text-xs font-bold rounded-lg transition-all ${
-                  timeRange === r
-                    ? 'bg-[#006194] text-white shadow-xs'
-                    : 'text-[#707881] dark:text-[#bfc7d2] hover:text-[#131b2e]'
-                }`}
-              >
-                {r === 'today' ? 'Today' : r === 'week' ? 'This Week' : r === 'month' ? 'This Month' : 'Yearly'}
-              </button>
-            ))}
+        <div className="bg-surface-container-lowest p-2 rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-2">
+          {/* Time Range Pills */}
+          <div className="flex items-center bg-surface-container-low p-1 rounded-lg w-full sm:w-auto" role="tablist">
+            {(['today', 'week', 'month', 'yearly'] as const).map((range) => {
+              const labels = {
+                today: 'Today',
+                week: 'This Week',
+                month: 'This Month',
+                yearly: 'Yearly'
+              };
+              const isActive = timeRange === range;
+              return (
+                <button
+                  key={range}
+                  onClick={() => setTimeRange(range)}
+                  className={`filter-pill flex-1 sm:flex-initial px-3 py-1 text-center font-label-sm text-label-sm rounded-md transition-all ${
+                    isActive
+                      ? 'bg-primary text-on-primary font-bold shadow-sm'
+                      : 'text-on-surface-variant hover:text-on-surface'
+                  }`}
+                  type="button"
+                >
+                  {labels[range]}
+                </button>
+              );
+            })}
           </div>
-
-          <div className="flex items-center gap-1.5 text-xs text-[#707881] px-1 w-full sm:w-auto justify-between sm:justify-end">
-            <div className="flex items-center gap-1 font-semibold text-[#131b2e] dark:text-white">
-              <span className="material-symbols-outlined text-[16px] text-[#006194]">calendar_today</span>
-              <span>Oct 1 – Oct 31, 2024</span>
+          <div className="flex items-center gap-1.5 text-on-surface-variant px-1 w-full sm:w-auto justify-between sm:justify-end">
+            <div className="flex items-center gap-1">
+              <span className="material-symbols-outlined text-[16px] text-primary">calendar_today</span>
+              <span className="font-label-sm text-label-sm font-semibold text-on-surface">Oct 1 – Oct 31, 2024</span>
             </div>
-            <span className="px-2 py-0.5 rounded-full bg-[#cde5ff] text-[#004b74] text-[10px] font-bold">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
               Closed Book
             </span>
           </div>
         </div>
       </section>
 
-      {/* Key Metrics Summary Cards (2x2 Grid) */}
-      <section className="grid grid-cols-2 gap-2.5">
+      {/* Key Metrics / Executive Financial Summary Cards (2x2 Grid) */}
+      <section className="grid grid-cols-2 gap-space-sm">
         {/* Net Revenue */}
-        <div className="bg-white dark:bg-[#1a2235] p-3.5 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#707881]">
-            <span className="text-[10px] font-bold uppercase tracking-wider">Net Revenue</span>
-            <span className="material-symbols-outlined text-[18px] text-[#006194]">payments</span>
+        <div className="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between">
+          <div className="absolute -right-3 -top-3 w-16 h-16 rounded-full bg-secondary-fixed/30 pointer-events-none"></div>
+          <div className="flex items-center justify-between">
+            <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Net Revenue</span>
+            <span className="material-symbols-outlined text-[18px] text-primary">payments</span>
           </div>
-          <div className="my-1.5">
-            <div className="text-2xl font-extrabold text-[#131b2e] dark:text-white leading-tight">
-              ₱348,650
-            </div>
+          <div className="mt-2 mb-1">
+            <div className="font-currency-display text-currency-display text-on-surface tracking-tight leading-tight">₱348,650</div>
           </div>
           <div className="flex items-center gap-1">
-            <span className="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded bg-[#e6f4f2] text-[#00685f] text-[10px] font-bold">
-              <span className="material-symbols-outlined text-[12px]">trending_up</span> +14.2%
+            <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-bold">
+              <span className="material-symbols-outlined text-[12px]">trending_up</span>
+              +14.2%
             </span>
-            <span className="text-[11px] text-[#707881]">vs Sept</span>
+            <span className="font-body-sm text-body-sm text-on-surface-variant truncate">vs Sept</span>
           </div>
         </div>
 
-        {/* Gross Loads */}
-        <div className="bg-white dark:bg-[#1a2235] p-3.5 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#707881]">
-            <span className="text-[10px] font-bold uppercase tracking-wider">Gross Loads</span>
-            <span className="material-symbols-outlined text-[18px] text-[#00685f]">local_laundry_service</span>
+        {/* Total Gross Loads */}
+        <div className="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Gross Loads</span>
+            <span className="material-symbols-outlined text-[18px] text-tertiary">local_laundry_service</span>
           </div>
-          <div className="my-1.5">
-            <div className="text-2xl font-extrabold text-[#131b2e] dark:text-white leading-tight">
-              1,180
-            </div>
+          <div className="mt-2 mb-1">
+            <div className="font-currency-display text-currency-display text-on-surface tracking-tight leading-tight">1,180</div>
           </div>
-          <div className="flex items-center justify-between text-[11px]">
-            <span className="text-[#00685f] font-bold">~39.3 / day</span>
-            <span className="text-[#707881]">31 days</span>
+          <div className="flex items-center justify-between">
+            <span className="font-label-sm text-label-sm text-tertiary font-semibold">~39.3 / day</span>
+            <span className="font-body-sm text-body-sm text-on-surface-variant">31 days</span>
           </div>
         </div>
 
-        {/* Expenses */}
-        <div className="bg-white dark:bg-[#1a2235] p-3.5 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#707881]">
-            <span className="text-[10px] font-bold uppercase tracking-wider">Expenses</span>
-            <span className="material-symbols-outlined text-[18px] text-[#ba1a1a]">receipt_long</span>
+        {/* Running Expenses */}
+        <div className="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Expenses</span>
+            <span className="material-symbols-outlined text-[18px] text-error">receipt_long</span>
           </div>
-          <div className="my-1.5">
-            <div className="text-2xl font-extrabold text-[#131b2e] dark:text-white leading-tight">
-              ₱86,400
-            </div>
+          <div className="mt-2 mb-1">
+            <div className="font-currency-display text-currency-display text-on-surface tracking-tight leading-tight">₱86,400</div>
           </div>
-          <span className="text-[11px] text-[#707881] truncate">Power, Water & Crew</span>
+          <div className="flex items-center gap-1">
+            <span className="font-body-sm text-body-sm text-on-surface-variant truncate">Power, Water & Crew</span>
+          </div>
         </div>
 
-        {/* Net Margin */}
-        <div className="bg-white dark:bg-[#1a2235] p-3.5 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] relative overflow-hidden flex flex-col justify-between">
-          <div className="flex items-center justify-between text-[#707881]">
-            <span className="text-[10px] font-bold uppercase tracking-wider">Net Margin</span>
-            <span className="material-symbols-outlined text-[18px] text-[#00685f]">savings</span>
+        {/* Net Profit Margin */}
+        <div className="bg-surface-container-lowest p-space-sm rounded-xl shadow-sm relative overflow-hidden flex flex-col justify-between">
+          <div className="absolute -right-4 -bottom-4 w-16 h-16 rounded-full bg-tertiary-fixed/30 pointer-events-none"></div>
+          <div className="flex items-center justify-between">
+            <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Net Margin</span>
+            <span className="material-symbols-outlined text-[18px] text-tertiary">savings</span>
           </div>
-          <div className="my-1.5">
-            <div className="text-2xl font-extrabold text-[#00685f] dark:text-[#89f5e7] leading-tight">
-              75.2%
-            </div>
+          <div className="mt-2 mb-1">
+            <div className="font-currency-display text-currency-display text-tertiary tracking-tight leading-tight">75.2%</div>
           </div>
-          <div className="flex items-center gap-1 text-[11px]">
-            <span className="font-bold text-[#131b2e] dark:text-white">₱262,250</span>
-            <span className="text-[#707881]">profit</span>
+          <div className="flex items-center gap-1">
+            <span className="font-label-sm text-label-sm font-bold text-on-surface">₱262,250</span>
+            <span className="font-body-sm text-body-sm text-on-surface-variant truncate">profit</span>
           </div>
         </div>
       </section>
 
       {/* Interactive Revenue Trend Chart Card */}
-      <section className="bg-white dark:bg-[#1a2235] p-4 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] flex flex-col gap-3">
+      <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-sm">
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="font-bold text-sm text-[#131b2e] dark:text-white">Revenue Velocity & Peak Cycles</h2>
-            <p className="text-xs text-[#707881]">Daily gross income tracking • Katipunan Bay</p>
+            <h2 className="font-headline-sm text-headline-sm text-on-surface">Revenue Velocity & Peak Cycles</h2>
+            <p className="font-body-sm text-body-sm text-on-surface-variant">Daily gross income tracking • Katipunan Bay</p>
           </div>
-          <div className="flex items-center gap-1.5 bg-[#f2f3ff] dark:bg-[#131b2e] px-2.5 py-1 rounded-full text-xs">
-            <span className="w-2 h-2 rounded-full bg-[#006194]"></span>
-            <span className="text-[10px] font-bold text-[#131b2e] dark:text-white">Oct Cycles</span>
+          <div className="flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-md">
+            <span className="w-2 h-2 rounded-full bg-primary"></span>
+            <span className="font-label-sm text-label-sm text-on-surface">Oct Cycles</span>
           </div>
         </div>
 
-        {/* Highlight Banner */}
-        <div className="bg-[#f2f3ff] dark:bg-[#131b2e] p-3 rounded-xl flex items-center justify-between border border-[#cce5ff]">
+        {/* Interactive Peak Highlight Banner */}
+        <div className="bg-surface-container-low p-2.5 rounded-lg flex items-center justify-between transition-all">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#006194] text-[20px]">stars</span>
+            <span className="material-symbols-outlined text-primary text-[20px]">stars</span>
             <div>
-              <div className="text-xs font-bold text-[#006194] dark:text-[#93ccff]">
-                Month Peak Load: Oct 19 (Saturday)
-              </div>
-              <div className="text-[11px] text-[#707881]">
-                ₱21,450.00 • 68 Baskets Cleared • 100% Bay Occupancy
-              </div>
+              <div className="font-label-sm text-label-sm text-primary font-bold">Month Peak Load: Oct 19 (Saturday)</div>
+              <div className="font-body-sm text-body-sm text-on-surface-variant">₱21,450.00 • 68 Baskets Cleared • 100% Bay Occupancy</div>
             </div>
           </div>
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#cce5ff] text-[#004b73]">
-            All-time High
-          </span>
+          <span className="font-label-sm text-label-sm px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-bold">All-time High</span>
         </div>
 
-        {/* Custom SVG Graph */}
-        <div className="relative w-full pt-1 pb-1">
-          <svg className="w-full h-32 overflow-visible" viewBox="0 0 320 120" preserveAspectRatio="none">
+        {/* Custom SVG Histogram / Trend Display */}
+        <div className="relative w-full pt-2 pb-1">
+          <svg aria-label="Revenue chart for October" className="w-full h-32 overflow-visible" preserveAspectRatio="none" viewBox="0 0 320 120">
             <defs>
-              <linearGradient id="ownerPrimaryGrad" x1="0" x2="0" y1="0" y2="1">
+              <linearGradient id="primaryGradient" x1="0" x2="0" y1="0" y2="1">
                 <stop offset="0%" stopColor="#006194" stopOpacity="0.35" />
                 <stop offset="100%" stopColor="#006194" stopOpacity="0.0" />
               </linearGradient>
+              <linearGradient id="barWeekendGradient" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0%" stopColor="#008378" />
+                <stop offset="100%" stopColor="#89f5e7" />
+              </linearGradient>
             </defs>
-            <line x1="0" x2="320" y1="20" y2="20" stroke="#dae2fd" strokeDasharray="3 3" strokeWidth="0.8" />
-            <line x1="0" x2="320" y1="60" y2="60" stroke="#dae2fd" strokeDasharray="3 3" strokeWidth="0.8" />
-            <line x1="0" x2="320" y1="100" y2="100" stroke="#dae2fd" strokeWidth="1" />
-
-            {/* Area Fill */}
-            <path
-              d="M 5,95 Q 40,75 75,82 T 145,55 T 205,18 T 265,65 T 315,40 L 315,100 L 5,100 Z"
-              fill="url(#ownerPrimaryGrad)"
-            />
-            {/* Spline */}
-            <path
-              d="M 5,95 Q 40,75 75,82 T 145,55 T 205,18 T 265,65 T 315,40"
-              fill="none"
-              stroke="#006194"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-            />
-            {/* Weekend Bars */}
-            <rect x="52" y="55" width="8" height="45" rx="3" fill="#93ccff" opacity="0.7" />
-            <rect x="63" y="48" width="8" height="52" rx="3" fill="#93ccff" opacity="0.7" />
-            <rect x="122" y="40" width="8" height="60" rx="3" fill="#93ccff" opacity="0.7" />
-            <rect x="133" y="36" width="8" height="64" rx="3" fill="#93ccff" opacity="0.7" />
-            {/* Oct 19 peak bar */}
-            <rect x="194" y="16" width="10" height="84" rx="3" fill="#008378" />
-            <circle cx="199" cy="16" r="4" fill="#00685f" stroke="#ffffff" strokeWidth="1.5" />
-            <rect x="264" y="32" width="8" height="68" rx="3" fill="#93ccff" opacity="0.7" />
-            <rect x="275" y="38" width="8" height="62" rx="3" fill="#93ccff" opacity="0.7" />
+            {/* Horizontal baseline guide lines */}
+            <line stroke="#dae2fd" strokeDasharray="3 3" strokeWidth="0.8" x1="0" x2="320" y1="20" y2="20" />
+            <line stroke="#dae2fd" strokeDasharray="3 3" strokeWidth="0.8" x1="0" x2="320" y1="60" y2="60" />
+            <line stroke="#dae2fd" strokeWidth="1" x1="0" x2="320" y1="100" y2="100" />
+            {/* Area Fill under spline */}
+            <path d="M 5,95 Q 40,75 75,82 T 145,55 T 205,18 T 265,65 T 315,40 L 315,100 L 5,100 Z" fill="url(#primaryGradient)" />
+            {/* Spline Line */}
+            <path d="M 5,95 Q 40,75 75,82 T 145,55 T 205,18 T 265,65 T 315,40" fill="none" stroke="#006194" strokeLinecap="round" strokeWidth="2.5" />
+            {/* Weekend Indicators / Peak Bars */}
+            <rect fill="#93ccff" height="45" opacity="0.7" rx="3" width="8" x="52" y="55" />
+            <rect fill="#93ccff" height="52" opacity="0.7" rx="3" width="8" x="63" y="48" />
+            <rect fill="#93ccff" height="60" opacity="0.7" rx="3" width="8" x="122" y="40" />
+            <rect fill="#93ccff" height="64" opacity="0.7" rx="3" width="8" x="133" y="36" />
+            <rect className="cursor-pointer" fill="url(#barWeekendGradient)" height="84" rx="3" width="10" x="194" y="16">
+              <title>Oct 19 Peak: ₱21,450</title>
+            </rect>
+            <circle cx="199" cy="16" fill="#00685f" r="3.5" stroke="#ffffff" strokeWidth="1.5" />
+            <rect fill="#93ccff" height="68" opacity="0.7" rx="3" width="8" x="264" y="32" />
+            <rect fill="#93ccff" height="62" opacity="0.7" rx="3" width="8" x="275" y="38" />
           </svg>
-          <div className="flex justify-between items-center text-[#707881] text-[10px] pt-1">
+          {/* Chart Labels */}
+          <div className="flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm pt-1">
             <span>Week 1 (Oct 1-7)</span>
             <span>W2 (8-14)</span>
-            <span className="text-[#00685f] font-bold">W3 Peak (15-21)</span>
+            <span className="text-tertiary font-bold">W3 Peak (15-21)</span>
             <span>W4 (22-28)</span>
             <span>W5 (29-31)</span>
           </div>
         </div>
-
-        <div className="flex items-center gap-2 pt-1 text-xs text-[#707881]">
-          <span className="material-symbols-outlined text-[16px] text-[#00685f] flex-shrink-0">info</span>
-          <span>Weekend average reaches <strong className="text-[#131b2e] dark:text-white font-bold">₱18,500/day</strong>, delivering 48% of total month volume.</span>
+        {/* Quick Takeaway Callout */}
+        <div className="flex items-center gap-2 pt-1 border-t-0 text-on-surface-variant font-body-sm text-body-sm">
+          <span className="material-symbols-outlined text-[16px] text-tertiary flex-shrink-0">info</span>
+          <span>Weekend average reaches <strong className="text-on-surface font-semibold">₱18,500/day</strong>, delivering 48% of total month volume.</span>
         </div>
       </section>
 
       {/* Revenue Breakdown by Payment Method */}
-      <section className="bg-white dark:bg-[#1a2235] p-4 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] flex flex-col gap-3">
+      <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-sm">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-bold text-sm text-[#131b2e] dark:text-white">Payment Channel Split</h2>
-            <p className="text-xs text-[#707881]">Verified customer settlement distribution</p>
+            <h2 className="font-headline-sm text-headline-sm text-on-surface">Payment Channel Split</h2>
+            <p className="font-body-sm text-body-sm text-on-surface-variant">Verified customer settlement distribution</p>
           </div>
-          <span className="text-[10px] font-bold bg-[#eaedff] dark:bg-[#283044] text-[#131b2e] dark:text-white px-2.5 py-0.5 rounded-full">
-            1,180 TXNs
-          </span>
+          <span className="font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded-full text-on-surface font-bold">1,180 TXNs</span>
         </div>
-
-        {/* Multi-Segment Bar */}
-        <div className="w-full h-3 rounded-full bg-[#eaedff] dark:bg-[#283044] flex overflow-hidden">
-          <div className="bg-[#006194] h-full" style={{ width: '58%' }} title="GCash: 58%"></div>
-          <div className="bg-[#008378] h-full" style={{ width: '36%' }} title="Cash: 36%"></div>
-          <div className="bg-[#ba1a1a] h-full" style={{ width: '6%' }} title="Unsettled: 6%"></div>
+        {/* Multi-Segment Visual Bar */}
+        <div className="w-full h-3 rounded-full bg-surface-container-high flex overflow-hidden">
+          <div className="bg-primary h-full transition-all duration-500" style={{ width: '58%' }} title="GCash: 58%"></div>
+          <div className="bg-tertiary-container h-full transition-all duration-500" style={{ width: '36%' }} title="Cash: 36%"></div>
+          <div className="bg-error h-full transition-all duration-500" style={{ width: '6%' }} title="Unsettled: 6%"></div>
         </div>
-
-        {/* Channels */}
-        <div className="space-y-2 pt-1">
-          {/* GCash */}
-          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#f2f3ff] dark:bg-[#131b2e]">
+        {/* Itemized Channels */}
+        <div className="space-y-space-sm pt-1">
+          {/* GCash Row */}
+          <div className="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#005ce6] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-bold text-label-sm shadow-sm flex-shrink-0">
                 G
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-[#131b2e] dark:text-white">GCash Digital Pay</span>
-                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#cce5ff] text-[#004b73]">58%</span>
+                  <span className="font-label-lg text-label-lg font-bold text-on-surface">GCash Digital Pay</span>
+                  <span className="px-1.5 py-0.2 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm">58%</span>
                 </div>
-                <span className="text-[11px] text-[#707881]">684 QR Transfers</span>
+                <span className="font-body-sm text-body-sm text-on-surface-variant">684 QR Transfers</span>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-xs font-bold text-[#131b2e] dark:text-white">₱202,217.00</div>
-              <span className="text-[10px] font-bold text-[#008378]">Auto-reconciled</span>
+              <div className="font-currency-body text-currency-body text-on-surface">₱202,217.00</div>
+              <span className="font-label-sm text-label-sm text-tertiary font-semibold">Auto-reconciled</span>
             </div>
           </div>
-
-          {/* Cash */}
-          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#f2f3ff] dark:bg-[#131b2e]">
+          {/* Cash on Hand Row */}
+          <div className="flex items-center justify-between p-2 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#e6f4f2] text-[#00685f] flex items-center justify-center shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-bold text-label-sm shadow-sm flex-shrink-0">
                 <span className="material-symbols-outlined text-[18px]">payments</span>
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-[#131b2e] dark:text-white">Counter Cash</span>
-                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#eaedff] text-[#3f4850]">36%</span>
+                  <span className="font-label-lg text-label-lg font-bold text-on-surface">Counter Cash</span>
+                  <span className="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">36%</span>
                 </div>
-                <span className="text-[11px] text-[#707881]">425 Register slips</span>
+                <span className="font-body-sm text-body-sm text-on-surface-variant">425 Register slips</span>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-xs font-bold text-[#131b2e] dark:text-white">₱125,514.00</div>
-              <span className="text-[10px] text-[#707881]">Deposited in Vault</span>
+              <div className="font-currency-body text-currency-body text-on-surface">₱125,514.00</div>
+              <span className="font-label-sm text-label-sm text-on-surface-variant">Deposited in Vault</span>
             </div>
           </div>
-
-          {/* Pay-Later */}
-          <div className="flex items-center justify-between p-2.5 rounded-xl bg-[#ffdad6]/50 dark:bg-[#93000a]/20">
+          {/* Pay-Later Unsettled */}
+          <div className="flex items-center justify-between p-2 rounded-lg bg-error-container/40 hover:bg-error-container/60 transition-colors">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#ba1a1a] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+              <div className="w-8 h-8 rounded-lg bg-error text-on-error flex items-center justify-center font-bold text-label-sm shadow-sm flex-shrink-0">
                 <span className="material-symbols-outlined text-[18px]">pending_actions</span>
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-[#ba1a1a] dark:text-[#ffdad6]">Pay-Later Balance</span>
-                  <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-[#ba1a1a] text-white">6%</span>
+                  <span className="font-label-lg text-label-lg font-bold text-on-surface">Pay-Later Balance</span>
+                  <span className="px-1.5 py-0.2 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold">6%</span>
                 </div>
-                <span className="text-[11px] text-[#ba1a1a] dark:text-[#ffdad6]">71 Pending ticket stubs</span>
+                <span className="font-body-sm text-body-sm text-on-error-container">71 Pending ticket stubs</span>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-xs font-bold text-[#ba1a1a] dark:text-[#ffdad6]">₱20,919.00</div>
-              <span className="text-[10px] text-[#ba1a1a] font-bold flex items-center gap-0.5 justify-end">
+              <div className="font-currency-body text-currency-body text-error font-bold">₱20,919.00</div>
+              <span className="font-label-sm text-label-sm text-error font-bold inline-flex items-center gap-0.5">
                 <span className="material-symbols-outlined text-[12px]">warning</span> ₱4,850 &gt;7d
               </span>
             </div>
           </div>
         </div>
-
+        {/* Ledger Link */}
         <button
           onClick={onViewUnsettled}
-          className="inline-flex items-center justify-center gap-1 py-1.5 text-[#006194] dark:text-[#93ccff] font-bold text-xs hover:underline"
+          className="inline-flex items-center justify-center gap-1 py-2 text-primary hover:text-primary-container font-label-sm text-label-sm font-bold transition-colors"
+          type="button"
         >
           <span>View Unsettled Pay-Later Ledger</span>
           <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
         </button>
       </section>
 
-      {/* Service Mix & Operating Utility */}
-      <section className="bg-white dark:bg-[#1a2235] p-4 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <h2 className="font-bold text-sm text-[#131b2e] dark:text-white">Service Volume Mix</h2>
-          <span className="material-symbols-outlined text-[18px] text-[#006194]">pie_chart</span>
+      {/* Service Mix & Operational Ratios */}
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
+        {/* Service Distribution */}
+        <div className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between space-y-space-sm">
+          <div>
+            <div className="flex items-center justify-between">
+              <h2 className="font-headline-sm text-headline-sm text-on-surface">Service Volume Mix</h2>
+              <span className="material-symbols-outlined text-[18px] text-primary">pie_chart</span>
+            </div>
+            <p className="font-body-sm text-body-sm text-on-surface-variant">Breakdown by laundry service category</p>
+          </div>
+          <div className="space-y-2.5">
+            <div>
+              <div className="flex justify-between font-label-sm text-label-sm mb-1">
+                <span className="text-on-surface font-semibold">Wash-Dry-Fold (Regular)</span>
+                <span className="text-on-surface font-bold">52% (614 loads)</span>
+              </div>
+              <div className="w-full h-2 rounded-full bg-surface-container">
+                <div className="h-2 rounded-full bg-primary" style={{ width: '52%' }}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between font-label-sm text-label-sm mb-1">
+                <span className="text-on-surface font-semibold">Bulky / Comforter Care</span>
+                <span className="text-tertiary font-bold">26% (High Margin)</span>
+              </div>
+              <div className="w-full h-2 rounded-full bg-surface-container">
+                <div className="h-2 rounded-full bg-tertiary" style={{ width: '26%' }}></div>
+              </div>
+            </div>
+            <div>
+              <div className="flex justify-between font-label-sm text-label-sm mb-1">
+                <span className="text-on-surface font-semibold">Self-Service Bay Access</span>
+                <span className="text-on-surface-variant font-bold">22% (260 loads)</span>
+              </div>
+              <div className="w-full h-2 rounded-full bg-surface-container">
+                <div className="h-2 rounded-full bg-secondary-container" style={{ width: '22%' }}></div>
+              </div>
+            </div>
+          </div>
+          <div className="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">
+            <span className="font-body-sm text-body-sm text-on-surface-variant">Avg Ticket Size</span>
+            <span className="font-currency-body text-currency-body text-on-surface font-bold">₱295.40 / client</span>
+          </div>
         </div>
 
-        <div className="space-y-2.5">
+        {/* Operating Expense Breakdown */}
+        <div className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between space-y-space-sm">
           <div>
-            <div className="flex justify-between text-xs mb-1">
-              <span className="font-semibold text-[#131b2e] dark:text-white">Wash-Dry-Fold (Regular)</span>
-              <span className="font-bold text-[#131b2e] dark:text-white">52% (614 loads)</span>
+            <div className="flex items-center justify-between">
+              <h2 className="font-headline-sm text-headline-sm text-on-surface">Operating Utility & Costs</h2>
+              <span className="material-symbols-outlined text-[18px] text-error">tune</span>
             </div>
-            <div className="w-full h-2 rounded-full bg-[#eaedff] dark:bg-[#283044] overflow-hidden">
-              <div className="h-full bg-[#006194] rounded-full" style={{ width: '52%' }}></div>
+            <p className="font-body-sm text-body-sm text-on-surface-variant">Total: ₱86,400.00 OPEX in October</p>
+          </div>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between py-1">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary"></span>
+                <span className="font-body-sm text-body-sm text-on-surface">Power & Water (Meralco/Maynilad)</span>
+              </div>
+              <div className="text-right">
+                <span className="font-label-sm text-label-sm font-bold text-on-surface">₱32,400</span>
+                <span className="font-label-sm text-label-sm text-on-surface-variant ml-1">(37.5%)</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between py-1">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-tertiary"></span>
+                <span className="font-body-sm text-body-sm text-on-surface">Staff Payroll & Overtime</span>
+              </div>
+              <div className="text-right">
+                <span className="font-label-sm text-label-sm font-bold text-on-surface">₱25,000</span>
+                <span className="font-label-sm text-label-sm text-on-surface-variant ml-1">(28.9%)</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between py-1">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-secondary"></span>
+                <span className="font-body-sm text-body-sm text-on-surface">Detergent, Softener & Bags</span>
+              </div>
+              <div className="text-right">
+                <span className="font-label-sm text-label-sm font-bold text-on-surface">₱24,800</span>
+                <span className="font-label-sm text-label-sm text-on-surface-variant ml-1">(28.7%)</span>
+              </div>
+            </div>
+            <div className="flex items-center justify-between py-1">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-outline"></span>
+                <span className="font-body-sm text-body-sm text-on-surface">Machine Maintenance Sinking Fund</span>
+              </div>
+              <div className="text-right">
+                <span className="font-label-sm text-label-sm font-bold text-on-surface">₱4,200</span>
+                <span className="font-label-sm text-label-sm text-on-surface-variant ml-1">(4.9%)</span>
+              </div>
             </div>
           </div>
-
-          <div>
-            <div className="flex justify-between text-xs mb-1">
-              <span className="font-semibold text-[#131b2e] dark:text-white">Bulky / Comforter Care</span>
-              <span className="font-bold text-[#00685f]">26% (High Margin)</span>
-            </div>
-            <div className="w-full h-2 rounded-full bg-[#eaedff] dark:bg-[#283044] overflow-hidden">
-              <div className="h-full bg-[#008378] rounded-full" style={{ width: '26%' }}></div>
-            </div>
+          <div className="p-2.5 rounded-lg bg-tertiary-fixed/20 flex items-center justify-between">
+            <span className="font-body-sm text-body-sm text-on-surface">Water Recycling Efficiency</span>
+            <span className="font-label-sm text-label-sm font-bold text-tertiary">91.4% Target Met</span>
           </div>
-
-          <div>
-            <div className="flex justify-between text-xs mb-1">
-              <span className="font-semibold text-[#131b2e] dark:text-white">Self-Service Bay Access</span>
-              <span className="font-bold text-[#707881]">22% (260 loads)</span>
-            </div>
-            <div className="w-full h-2 rounded-full bg-[#eaedff] dark:bg-[#283044] overflow-hidden">
-              <div className="h-full bg-[#7bc2ff] rounded-full" style={{ width: '22%' }}></div>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-3 rounded-xl bg-[#f2f3ff] dark:bg-[#131b2e] flex items-center justify-between text-xs">
-          <span className="text-[#707881]">Average Ticket Size</span>
-          <span className="font-bold text-[#131b2e] dark:text-white">₱295.40 / client</span>
         </div>
       </section>
 
-      {/* Facility Status Snapshot */}
-      <section className="bg-white dark:bg-[#1a2235] p-4 rounded-2xl shadow-sm border border-[#eaedff] dark:border-[#283044] flex flex-col gap-3">
+      {/* Physical Facility Status Summary Card */}
+      <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-sm">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[18px] text-[#006194]">storefront</span>
-            <h2 className="font-bold text-sm text-[#131b2e] dark:text-white">Katipunan Station Audit Snapshot</h2>
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-[20px] text-primary">storefront</span>
+            <h2 className="font-headline-sm text-headline-sm text-on-surface">Katipunan Station Audit Snapshot</h2>
           </div>
-          <span className="px-2 py-0.5 rounded-full bg-[#89f5e7] text-[#005049] text-[10px] font-bold">
+          <span className="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-bold">
             12/12 Drums Active
           </span>
         </div>
-
         <div className="grid grid-cols-3 gap-2 text-center pt-1">
-          <div className="bg-[#f2f3ff] dark:bg-[#131b2e] p-2.5 rounded-xl border border-[#eaedff] dark:border-[#283044]">
-            <div className="text-[11px] text-[#707881]">Washer Hubs</div>
-            <div className="text-base font-extrabold text-[#131b2e] dark:text-white mt-0.5">6 Units</div>
-            <span className="text-[10px] font-bold text-[#00685f]">100% Calibrated</span>
+          <div className="bg-surface-container-low p-2 rounded-lg">
+            <div className="font-body-sm text-body-sm text-on-surface-variant">Washer Hubs</div>
+            <div className="font-headline-sm text-headline-sm text-on-surface mt-0.5">6 Units</div>
+            <span className="font-label-sm text-label-sm text-tertiary font-semibold">100% Calibrated</span>
           </div>
-          <div className="bg-[#f2f3ff] dark:bg-[#131b2e] p-2.5 rounded-xl border border-[#eaedff] dark:border-[#283044]">
-            <div className="text-[11px] text-[#707881]">Dryer Hubs</div>
-            <div className="text-base font-extrabold text-[#131b2e] dark:text-white mt-0.5">6 Units</div>
-            <span className="text-[10px] font-bold text-[#00685f]">Lint Cleared 4h ago</span>
+          <div className="bg-surface-container-low p-2 rounded-lg">
+            <div className="font-body-sm text-body-sm text-on-surface-variant">Dryer Hubs</div>
+            <div className="font-headline-sm text-headline-sm text-on-surface mt-0.5">6 Units</div>
+            <span className="font-label-sm text-label-sm text-tertiary font-semibold">Lint Cleared 4h ago</span>
           </div>
-          <div className="bg-[#f2f3ff] dark:bg-[#131b2e] p-2.5 rounded-xl border border-[#eaedff] dark:border-[#283044]">
-            <div className="text-[11px] text-[#707881]">Attendants</div>
-            <div className="text-base font-extrabold text-[#131b2e] dark:text-white mt-0.5">3 On-Shift</div>
-            <span className="text-[10px] font-bold text-[#006194]">Shift B Active</span>
+          <div className="bg-surface-container-low p-2 rounded-lg">
+            <div className="font-body-sm text-body-sm text-on-surface-variant">Attendants</div>
+            <div className="font-headline-sm text-headline-sm text-on-surface mt-0.5">3 On-Shift</div>
+            <span className="font-label-sm text-label-sm text-primary font-semibold">Shift B active</span>
           </div>
         </div>
       </section>
 
-      {/* Export Modal */}
+      {/* Interactive Export Modal */}
       {showExportModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#131b2e]/60 backdrop-blur-sm">
-          <div className="bg-white dark:bg-[#1a2235] p-6 rounded-2xl max-w-xs w-full shadow-2xl space-y-4 text-center border border-[#eaedff] dark:border-[#283044] animate-in zoom-in-95">
-            <div className="w-12 h-12 mx-auto rounded-full bg-[#cce5ff] text-[#006194] flex items-center justify-center">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-on-surface/40 backdrop-blur-sm"
+          onClick={() => setShowExportModal(false)}
+        >
+          <div
+            className="bg-surface-container-lowest p-6 rounded-2xl max-w-xs w-full shadow-2xl space-y-4 text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="w-12 h-12 mx-auto rounded-full bg-primary-fixed flex items-center justify-center text-primary">
               <span className="material-symbols-outlined text-[28px]">download_done</span>
             </div>
             <div>
-              <h3 className="font-bold text-base text-[#131b2e] dark:text-white">Report Generated!</h3>
-              <p className="text-xs text-[#707881] mt-1">Aquaspin_Katipunan_Oct2024.csv is ready for accounting & BIR review.</p>
+              <h3 className="font-headline-sm text-headline-sm text-on-surface">Report Generated!</h3>
+              <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">Aquaspin_Katipunan_Oct2024.csv is ready for accounting.</p>
             </div>
             <div className="flex gap-2">
               <button
+                className="w-full py-2.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-bold hover:bg-primary-container transition-colors shadow"
+                type="button"
                 onClick={() => {
                   setShowExportModal(false);
-                  showToast('Exported Katipunan October Ledger CSV', 'download');
+                  showToast('Aquaspin_Katipunan_Oct2024.csv downloaded', 'download');
                 }}
-                className="w-full py-2.5 rounded-xl bg-[#006194] text-white font-bold text-xs hover:bg-[#007bb9] transition-colors shadow-sm"
               >
-                Download CSV
+                Done
               </button>
             </div>
           </div>
